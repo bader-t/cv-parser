@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/api/v1/cv-parser")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin
 public class CVParserController {
 
     private final CVParserService cvParserService;
