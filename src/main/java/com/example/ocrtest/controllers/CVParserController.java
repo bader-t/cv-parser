@@ -18,11 +18,12 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/api/v1/cv-parser")
 @RequiredArgsConstructor
 @Validated
-@CrossOrigin(origins = "*")
+
 public class CVParserController {
 
     private final CVParserService cvParserService;
 
+    @CrossOrigin
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContentResponseDTO> classify(@Valid @NotNull @RequestParam("file") final MultipartFile pdfFile) {
