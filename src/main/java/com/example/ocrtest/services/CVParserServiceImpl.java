@@ -1,8 +1,10 @@
 package com.example.ocrtest.services;
 
+import com.example.ocrtest.DTOs.ContentResponseDTO;
 import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
+import com.example.ocrtest.services.sectionImpl.CertificationParser;
 import com.example.ocrtest.services.sectionImpl.PersonalParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -32,12 +34,12 @@ public class CVParserServiceImpl implements CVParserService{
 
 
     @Override
-    public String parse(final MultipartFile multipartFile) {
+    public ContentResponseDTO parse(final MultipartFile multipartFile) {
         CV cv = new CV();
-
+        ContentResponseDTO response = new ContentResponseDTO();
         Map<SectionType, SectionParser> parserMap = new HashMap<>();
         parserMap.put(SectionType.Personal, new PersonalParser());
-        parserMap.put(SectionType.Certification, new PersonalParser());
+        parserMap.put(SectionType.Certification, new CertificationParser());
 
         String[] lines = this.extractContent(multipartFile).split("\n");
         List<Section> sections = this.extractSection(lines);
@@ -56,7 +58,9 @@ public class CVParserServiceImpl implements CVParserService{
             System.out.println("-------------");
 
         }
-        return this.extractContent(multipartFile);
+        response.setContent(this.extractContent(multipartFile));
+        response.setCv(cv);
+        return response;
     }
 
 

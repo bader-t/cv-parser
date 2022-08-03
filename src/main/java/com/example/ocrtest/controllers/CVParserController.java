@@ -29,7 +29,7 @@ public class CVParserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContentResponseDTO> classify(@Valid @NotNull @RequestParam("file") final MultipartFile pdfFile) {
         //CV cv = this.cvParserService.
-        return ResponseEntity.ok().body(ContentResponseDTO.builder().content(this.cvParserService.parse(pdfFile)).build());
+        return ResponseEntity.ok().body(this.cvParserService.parse(pdfFile));
     }
 
 
