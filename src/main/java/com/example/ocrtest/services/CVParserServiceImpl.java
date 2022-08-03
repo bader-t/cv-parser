@@ -3,6 +3,7 @@ package com.example.ocrtest.services;
 import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
+import com.example.ocrtest.services.sectionImpl.PersonalParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -26,6 +27,7 @@ public class CVParserServiceImpl implements CVParserService{
         this.sectionMap.put(SectionType.Skills,Pattern.compile("Skills",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Education,Pattern.compile("Education",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification",Pattern.CASE_INSENSITIVE));
     }
 
 
@@ -33,18 +35,26 @@ public class CVParserServiceImpl implements CVParserService{
     public String parse(final MultipartFile multipartFile) {
         CV cv = new CV();
 
-
+        Map<SectionType, SectionParser> parserMap = new HashMap<>();
+        parserMap.put(SectionType.Personal, new PersonalParser());
+        parserMap.put(SectionType.Certification, new PersonalParser());
 
         String[] lines = this.extractContent(multipartFile).split("\n");
         List<Section> sections = this.extractSection(lines);
         for (Section section: sections
              ) {
+
+            SectionParser sectionParser = parserMap.get(section.getType());
+            if (sectionParser != null) {
+                sectionParser.parse(section, cv);
+            }
             System.out.println(section.getType() + "\n");
             for (String d: section.getContent()
                  ) {
                 System.out.println( "+" + d );
             }
             System.out.println("-------------");
+
         }
         return this.extractContent(multipartFile);
     }

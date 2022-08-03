@@ -14,7 +14,7 @@ public class CV {
     private List<String> skills;
     private List<String> educations;
     private List<String> experiences;
-    private List<String> certifications;
+    private List<Certification> certifications;
 
 
 
