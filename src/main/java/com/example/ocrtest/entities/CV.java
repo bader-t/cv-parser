@@ -1,6 +1,7 @@
 package com.example.ocrtest.entities;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class CV {
     private List<String> educations;
     private List<String> experiences;
     private List<Certification> certifications;
-
-
-
+    public String toString(){
+        return "name :" +this.firstName;
+    }
 }
