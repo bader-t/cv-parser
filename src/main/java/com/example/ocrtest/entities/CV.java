@@ -12,9 +12,9 @@ public class CV {
     private String email;
     private String phoneNumber;
     private String address;
-    private List<String> skills;
+    private List<Skill> skills;
     private List<String> educations;
-    private List<String> experiences;
+    private List<Experience> experiences;
     private List<Certification> certifications = new ArrayList<>();;
     public String toString(){
         return "name :" +this.firstName;

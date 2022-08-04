@@ -6,7 +6,9 @@ import com.example.ocrtest.entities.Certification;
 import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
 import com.example.ocrtest.services.sectionImpl.CertificationParser;
+import com.example.ocrtest.services.sectionImpl.ExperienceParser;
 import com.example.ocrtest.services.sectionImpl.PersonalParser;
+import com.example.ocrtest.services.sectionImpl.SkillParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -15,6 +17,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -31,6 +34,7 @@ public class CVParserServiceImpl implements CVParserService{
         this.sectionMap.put(SectionType.Education,Pattern.compile("Education",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience",Pattern.CASE_INSENSITIVE));
     }
 
 
@@ -41,10 +45,13 @@ public class CVParserServiceImpl implements CVParserService{
         Map<SectionType, SectionParser> parserMap = new HashMap<>();
         parserMap.put(SectionType.Personal, new PersonalParser());
         parserMap.put(SectionType.Certification, new CertificationParser());
+        parserMap.put(SectionType.Skills,new SkillParser());
+        parserMap.put(SectionType.Experience,new ExperienceParser());
 
         String[] lines = this.extractContent(multipartFile).split("\n");
         List<Section> sections = this.extractSection(lines);
         for (Section section: sections) {
+            System.out.println(section.getType());
             SectionParser sectionParser = parserMap.get(section.getType());
             if (sectionParser != null) {
                 sectionParser.parse(section, cv);
