@@ -2,6 +2,7 @@ package com.example.ocrtest.entities;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,7 +15,8 @@ public class CV {
     private List<String> skills;
     private List<String> educations;
     private List<String> experiences;
-    private List<Certification> certifications;
+    private List<Certification> certifications = new ArrayList<>();
+
 
 
 
