@@ -1,5 +1,6 @@
 package com.example.ocrtest.services;
 
+import com.example.ocrtest.DTOs.ContentResponseDTO;
 import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.entities.Certification;
 import com.example.ocrtest.entities.Section;
@@ -34,9 +35,9 @@ public class CVParserServiceImpl implements CVParserService{
 
 
     @Override
-    public String parse(final MultipartFile multipartFile) {
+    public ContentResponseDTO parse(final MultipartFile multipartFile) {
         CV cv = new CV();
-
+        ContentResponseDTO response = new ContentResponseDTO();
         Map<SectionType, SectionParser> parserMap = new HashMap<>();
         parserMap.put(SectionType.Personal, new PersonalParser());
         parserMap.put(SectionType.Certification, new CertificationParser());
@@ -56,8 +57,9 @@ public class CVParserServiceImpl implements CVParserService{
             System.out.println("-------------");
 
         }
-        System.out.println(cv);
-        return this.extractContent(multipartFile);
+        response.setContent(this.extractContent(multipartFile));
+        response.setCv(cv);
+        return response;
     }
 
 
