@@ -7,6 +7,7 @@ import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
 import com.example.ocrtest.services.sectionImpl.CertificationParser;
 import com.example.ocrtest.services.sectionImpl.ExperienceParser;
+import com.example.ocrtest.services.sectionImpl.EducationParser;
 import com.example.ocrtest.services.sectionImpl.PersonalParser;
 import com.example.ocrtest.services.sectionImpl.SkillParser;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -47,6 +47,7 @@ public class CVParserServiceImpl implements CVParserService{
         parserMap.put(SectionType.Certification, new CertificationParser());
         parserMap.put(SectionType.Skills,new SkillParser());
         parserMap.put(SectionType.Experience,new ExperienceParser());
+        parserMap.put(SectionType.Education, new EducationParser());
 
         String[] lines = this.extractContent(multipartFile).split("\n");
         List<Section> sections = this.extractSection(lines);

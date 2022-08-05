@@ -7,7 +7,6 @@ import com.example.ocrtest.services.SectionParser;
 public class EducationParser extends SectionParser {
     @Override
     public void parse(Section section, CV cv){
-
-
+            cv.setEducation(section.getContent().get(0));
     }
 }
