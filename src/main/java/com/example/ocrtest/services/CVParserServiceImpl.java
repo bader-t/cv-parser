@@ -30,11 +30,11 @@ public class CVParserServiceImpl implements CVParserService{
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
 
     public CVParserServiceImpl() {
-        this.sectionMap.put(SectionType.Skills,Pattern.compile("Skills",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Education,Pattern.compile("Education",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Skills,Pattern.compile("Skills|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|expérience",Pattern.CASE_INSENSITIVE));
     }
 
 

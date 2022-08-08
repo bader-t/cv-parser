@@ -19,8 +19,4 @@ public class CV {
     public String toString(){
         return "name :" +this.firstName;
     }
-
-
-
-
 }
