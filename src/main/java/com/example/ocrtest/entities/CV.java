@@ -13,9 +13,9 @@ public class CV {
     private String phoneNumber;
     private String address;
     private List<Skill> skills;
-    private List<String> educations;
+    private String education;
     private List<Experience> experiences;
-    private List<Certification> certifications = new ArrayList<>();;
+    private List<Certification> certifications = new ArrayList<>();
     public String toString(){
         return "name :" +this.firstName;
     }
