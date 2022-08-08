@@ -15,11 +15,13 @@ public class SkillParser extends SectionParser {
         List<Skill> skillslist = new ArrayList<>();
         try {
             for(String line:section.getContent()){
-                String [] domainskills = line.trim().split(":");
-                String [] skills = domainskills[1].split(",");
+                String [] domainSkills = line.trim().split(":");
+                String [] skills = domainSkills[1].split(",");
                 for(String skill:skills){
-                    Skill ski = new Skill(skill.trim(),domainskills[0]);
-                    skillslist.add(ski);
+                    Skill s = new Skill();
+                    s.setName(skill.trim());
+                    s.setType("Programming");
+                    skillslist.add(s);
                 }
             }
             cv.setSkills(skillslist);
