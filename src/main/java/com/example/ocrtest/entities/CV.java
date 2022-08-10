@@ -12,11 +12,15 @@ public class CV {
     private String email;
     private String phoneNumber;
     private String address;
-    private List<Skill> skills;
+    private List<Skill> skills = new ArrayList<>();
     private String education;
     private List<Experience> experiences;
     private List<Certification> certifications = new ArrayList<>();
     public String toString(){
         return "name :" +this.firstName;
+    }
+
+    public void addskill(Skill skill){
+        this.skills.add(skill);
     }
 }

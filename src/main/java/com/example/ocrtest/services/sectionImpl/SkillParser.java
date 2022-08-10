@@ -21,8 +21,8 @@ public class SkillParser extends SectionParser {
                     String[] domainskills = line.trim().split(":");
                     String[] skills = domainskills[1].split(",");
                     for (String skill : skills) {
-                        Skill ski = new Skill(skill.trim(), domainskills[0]);
-                        skillslist.add(ski);
+                        Skill ski = new Skill(skill.trim(),"Programming");
+                        cv.addskill(ski);
                     }
                 }else {
                     if(i==0) {
@@ -30,15 +30,14 @@ public class SkillParser extends SectionParser {
                     }else if(i==1){
                         String [] skills = line.trim().split(",");
                         for(String skill:skills){
-                            Skill sky = new Skill(skill.trim(),domain[0]);
-                            skillslist.add(sky);
+                            Skill sky = new Skill(skill.trim(),"Programming");
+                            cv.addskill(sky);
                         }
                         i=-1;
                     }
                     i++;
                 }
             }
-            cv.setSkills(skillslist);
         }catch (Exception e){
             e.printStackTrace();
         }

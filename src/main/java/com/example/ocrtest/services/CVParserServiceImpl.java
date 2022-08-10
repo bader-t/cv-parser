@@ -5,11 +5,7 @@ import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.entities.Certification;
 import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
-import com.example.ocrtest.services.sectionImpl.CertificationParser;
-import com.example.ocrtest.services.sectionImpl.ExperienceParser;
-import com.example.ocrtest.services.sectionImpl.EducationParser;
-import com.example.ocrtest.services.sectionImpl.PersonalParser;
-import com.example.ocrtest.services.sectionImpl.SkillParser;
+import com.example.ocrtest.services.sectionImpl.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -35,6 +31,7 @@ public class CVParserServiceImpl implements CVParserService{
         this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE));
         this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|expérience",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE));
     }
 
 
@@ -48,6 +45,7 @@ public class CVParserServiceImpl implements CVParserService{
         parserMap.put(SectionType.Skills,new SkillParser());
         parserMap.put(SectionType.Experience,new ExperienceParser());
         parserMap.put(SectionType.Education, new EducationParser());
+        parserMap.put(SectionType.Soft_Skills,new SoftSkillsParser());
 
         String[] lines = this.extractContent(multipartFile).split("\n");
         List<Section> sections = this.extractSection(lines);

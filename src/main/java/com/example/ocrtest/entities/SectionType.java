@@ -1,5 +1,5 @@
 package com.example.ocrtest.entities;
 
 public enum SectionType {
-    Personal, Education, Experience, Skills, Interest, Certification, Unknown
+    Personal, Education, Experience, Skills, Interest, Certification, Unknown ,Soft_Skills
 }
