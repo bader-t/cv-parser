@@ -29,7 +29,18 @@ public class CVParserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContentResponseDTO> classify(@Valid @NotNull @RequestParam("file") final MultipartFile pdfFile) {
         //CV cv = this.cvParserService.
-        return ResponseEntity.ok().body(this.cvParserService.parse(pdfFile));
+        if(pdfFile!=null){
+            try {
+                return ResponseEntity.ok().body(this.cvParserService.parse(pdfFile));
+            }catch (Exception e){
+                ContentResponseDTO response = new ContentResponseDTO();
+                response.setError("this cv is not compatible!!");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+        }else{
+            throw new IllegalStateException("Please Upload a file");
+        }
     }
 
 

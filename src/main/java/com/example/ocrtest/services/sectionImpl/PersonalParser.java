@@ -15,7 +15,6 @@ public class PersonalParser extends SectionParser {
         Pattern emailpattern = Pattern.compile(emailregex);
         Pattern phonepattern = Pattern.compile(phoneregex);
         int i=0;
-        try{
             for(String line:section.getContent()){
                 if(i==0){
                     String [] firstlast = line.trim().split(" ");
@@ -30,10 +29,6 @@ public class PersonalParser extends SectionParser {
                 }
                 ++i;
             }
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("version du cv non compatible!!!!");
-        }
 
     }
 }

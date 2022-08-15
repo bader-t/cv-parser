@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ContentResponseDTO {private String content;
     private CV cv;
+    private String error;
 }
 

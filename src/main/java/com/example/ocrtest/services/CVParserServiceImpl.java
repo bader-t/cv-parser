@@ -26,15 +26,13 @@ public class CVParserServiceImpl implements CVParserService{
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
 
     public CVParserServiceImpl() {
-        this.sectionMap.put(SectionType.Skills,Pattern.compile("Skills|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|expérience",Pattern.CASE_INSENSITIVE));
-        this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE));
+        this.sectionMap.put(SectionType.Skills,Pattern.compile("^Skills$|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|Expérience",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
     }
-
-
     @Override
     public ContentResponseDTO parse(final MultipartFile multipartFile) {
         CV cv = new CV();
@@ -74,7 +72,9 @@ public class CVParserServiceImpl implements CVParserService{
         if(Objects.equals(multipartFile.getContentType(), "application/pdf")) {
             try (final PDDocument document = PDDocument.load(multipartFile.getInputStream())) {
                 final PDFTextStripper pdfStripper = new PDFTextStripper();
+                pdfStripper.setSortByPosition(true);
                 text = pdfStripper.getText(document);
+
             } catch (final Exception ex) {
                 text = "Error parsing PDF";
             }

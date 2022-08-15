@@ -15,15 +15,28 @@ public class SkillParser extends SectionParser {
         List<Skill> skillslist = new ArrayList<>();
         String [] domain = null;
         int i=0;
-        try {
             for(String line:section.getContent()){
-                if(line.split(":").length>1) {
+                if(line.contains(":")) {
                     String[] domainskills = line.trim().split(":");
-                    String[] skills = domainskills[1].split(",");
-                    for (String skill : skills) {
-                        Skill ski = new Skill(skill.trim(),"Programming");
-                        cv.addskill(ski);
+                    System.out.println(line);
+                    if(domainskills.length==1){
+                        continue;
+                    }else{
+                        String[] skills = domainskills[1].split(",");
+                        for (String skill : skills) {
+                            Skill ski = new Skill(skill.trim(),"Programming");
+                            cv.addskill(ski);
+                        }
                     }
+                }else if(!line.contains(":")){
+                    String [] skills = line.trim().split(",");
+                    for(String skill:skills){
+                        Skill sky = new Skill(skill.trim(),"Programming");
+                        cv.addskill(sky);
+                    }
+                }else if(!line.contains(":") && !line.contains(",")){
+                    Skill sky = new Skill(line.trim(),"Programming");
+                    cv.addskill(sky);
                 }else {
                     if(i==0) {
                         domain = line.trim().split(":");
@@ -38,8 +51,5 @@ public class SkillParser extends SectionParser {
                     i++;
                 }
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }
