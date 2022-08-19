@@ -2,8 +2,8 @@ package com.example.ocrtest.controllers;
 
 
 import com.example.ocrtest.DTOs.ContentResponseDTO;
-import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.services.CVParserService;
+import com.example.ocrtest.services.AfterExceptionParsing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,28 +19,26 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/api/v1/cv-parser")
 @RequiredArgsConstructor
 @Validated
-
 public class CVParserController {
 
     private final CVParserService cvParserService;
+    private final AfterExceptionParsing afterExceptionParsing;
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContentResponseDTO> classify(@Valid @NotNull @RequestParam("file") final MultipartFile pdfFile) {
-        //CV cv = this.cvParserService.
-        if(pdfFile!=null){
-            try {
-                return ResponseEntity.ok().body(this.cvParserService.parse(pdfFile));
-            }catch (Exception e){
-                ContentResponseDTO response = new ContentResponseDTO();
-                response.setError("this cv is not compatible!!");
-                return ResponseEntity.badRequest().body(response);
+        ContentResponseDTO temp = new ContentResponseDTO();
+            if(pdfFile!=null){
+                try{
+                    temp = this.cvParserService.parse(pdfFile);
+                    return ResponseEntity.ok().body(temp);
+                }catch (Exception e) {
+                    return ResponseEntity.ok().body(this.afterExceptionParsing.parseException(this.cvParserService.extractContent(pdfFile), temp.getCv()));
+                }
+            }else{
+                throw new IllegalStateException("Please Upload a file");
             }
-
-        }else{
-            throw new IllegalStateException("Please Upload a file");
-        }
     }
 
 

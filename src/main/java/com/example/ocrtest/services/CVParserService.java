@@ -5,5 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CVParserService
 {
-    ContentResponseDTO parse(final MultipartFile multipartFile);
+    ContentResponseDTO parse(final MultipartFile multipartFile) throws Exception;
+    String extractContent(final MultipartFile multipartFile);
 }

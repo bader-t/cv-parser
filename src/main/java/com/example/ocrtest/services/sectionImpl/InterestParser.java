@@ -6,7 +6,7 @@ import com.example.ocrtest.services.SectionParser;
 
 public class InterestParser extends SectionParser {
     @Override
-    public void parse(Section section, CV cv){
+    public void parse(Section section, CV cv) throws Exception{
 
     }
 }

@@ -11,42 +11,42 @@ import java.util.List;
 public class SkillParser extends SectionParser {
 
     @Override
-    public void parse(Section section, CV cv){
-        List<Skill> skillslist = new ArrayList<>();
-        String [] domain = null;
-        int i=0;
-            for(String line:section.getContent()){
-                if(line.contains(":")) {
+    public void parse(Section section, CV cv) throws Exception{
+            List<Skill> skillslist = new ArrayList<>();
+            String[] domain = null;
+            int i = 0;
+            for (String line : section.getContent()) {
+                if (line.contains(":")) {
                     String[] domainskills = line.trim().split(":");
                     System.out.println(line);
-                    if(domainskills.length==1){
+                    if (domainskills.length == 1) {
                         continue;
-                    }else{
+                    } else {
                         String[] skills = domainskills[1].split(",");
                         for (String skill : skills) {
-                            Skill ski = new Skill(skill.trim(),"Programming");
+                            Skill ski = new Skill(skill.trim(), "Programming");
                             cv.addskill(ski);
                         }
                     }
-                }else if(!line.contains(":")){
-                    String [] skills = line.trim().split(",");
-                    for(String skill:skills){
-                        Skill sky = new Skill(skill.trim(),"Programming");
+                } else if (!line.contains(":")) {
+                    String[] skills = line.trim().split(",");
+                    for (String skill : skills) {
+                        Skill sky = new Skill(skill.trim(), "Programming");
                         cv.addskill(sky);
                     }
-                }else if(!line.contains(":") && !line.contains(",")){
-                    Skill sky = new Skill(line.trim(),"Programming");
+                } else if (!line.contains(":") && !line.contains(",")) {
+                    Skill sky = new Skill(line.trim(), "Programming");
                     cv.addskill(sky);
-                }else {
-                    if(i==0) {
+                } else {
+                    if (i == 0) {
                         domain = line.trim().split(":");
-                    }else if(i==1){
-                        String [] skills = line.trim().split(",");
-                        for(String skill:skills){
-                            Skill sky = new Skill(skill.trim(),"Programming");
+                    } else if (i == 1) {
+                        String[] skills = line.trim().split(",");
+                        for (String skill : skills) {
+                            Skill sky = new Skill(skill.trim(), "Programming");
                             cv.addskill(sky);
                         }
-                        i=-1;
+                        i = -1;
                     }
                     i++;
                 }

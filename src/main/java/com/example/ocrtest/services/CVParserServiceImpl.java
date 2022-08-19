@@ -34,7 +34,7 @@ public class CVParserServiceImpl implements CVParserService{
         this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
     }
     @Override
-    public ContentResponseDTO parse(final MultipartFile multipartFile) {
+    public ContentResponseDTO parse(final MultipartFile multipartFile) throws Exception{
         CV cv = new CV();
         ContentResponseDTO response = new ContentResponseDTO();
         Map<SectionType, SectionParser> parserMap = new HashMap<>();

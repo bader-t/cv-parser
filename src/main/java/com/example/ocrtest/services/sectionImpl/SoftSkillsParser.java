@@ -7,10 +7,10 @@ import com.example.ocrtest.services.SectionParser;
 
 public class SoftSkillsParser extends SectionParser {
     @Override
-    public void parse(Section section, CV cv) {
-        for (String line:section.getContent()){
-            Skill skill = new Skill(line.trim(),"Soft Skill");
-            cv.addskill(skill);
-        }
+    public void parse(Section section, CV cv) throws Exception{
+            for (String line:section.getContent()){
+                Skill skill = new Skill(line.trim(),"Soft Skill");
+                cv.addskill(skill);
+            }
     }
 }

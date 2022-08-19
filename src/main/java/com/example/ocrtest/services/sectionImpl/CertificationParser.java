@@ -11,17 +11,15 @@ import java.util.Arrays;
 
 public class CertificationParser extends SectionParser {
     @Override
-    public void parse(Section section, CV cv) {
-
-        for (String line : section.getContent()) {
-            Certification certification = new Certification();
-            String[] details = line.trim().split("\\s*-\\s*",2);
-            System.out.println(">>" + Arrays.toString(details));
-            certification.setName(details[0]);
-            DateParser dateParser = new DateParser();
-            certification.setDateOfObtention(dateParser.parseDate(details[1]));
-            cv.getCertifications().add(certification);
-        }
-
+    public void parse(Section section, CV cv) throws Exception{
+            for (String line : section.getContent()) {
+                Certification certification = new Certification();
+                String[] details = line.trim().split("\\s*-\\s*",2);
+                System.out.println(">>" + Arrays.toString(details));
+                certification.setName(details[0]);
+                DateParser dateParser = new DateParser();
+                certification.setDateOfObtention(dateParser.parseDate(details[1]));
+                cv.getCertifications().add(certification);
+            }
     }
 }
