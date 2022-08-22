@@ -1,1 +1,61 @@
-\bsalesforce administrator 1\b|\bsalesforce administrator 2\b|\bsalesforce developer\b|\bcertified development lifecycle and deployment designer\b|\bsalesforce development lifecycle and deployment designer\b|\bsalesforce ADMINISTRATOR\b|\bAWS certified cloud practitioner\b|\bCertified cloud security professional\b|\bCertified data privacy solutions engineer\b|\bCertified data professional\b|\bCertified ethical hacker\b|\bCertified information security manager\b|\bCertified information systems security professional\b|\bCisco certified internetwork expert\b|\bCisco certified network professional\b|\bCompTIA\b|\bMicrosoft Certified Azure Solutions Architect\b|\bMicrosoft certified solutions associate/expert\b|\bInformation technology infrastructure library\b|\bOracle database and MySQL administration certifications\b|\bProject management professional\b|\bSalesforce certified development lifecycle and deployment designer\b|\bCERTIFIED ADMINISTRATOR\b|\bADVANCED ADMINISTRATOR\b|\bPLATFORM APP BUILDER\b|\bUSER EXPERIENCE (UX) DESIGNER\b|\bSTRATEGY DESIGNER\b|\bSERVICE CLOUD CONSULTANT\b|\bCPQ SPECIALIST\b|\bSALES CLOUD CONSULTANT\b|\bFIELD SERVICE CONSULTANT\b|\bEXPERIENCE CLOUD CONSULTANT\b|\bTABLEAU CRM & EINSTEIN DISCOVERY CONSULTANT\b|\bNONPROFIT CLOUD CONSULTANT\b|\bEDUCATION CLOUD CONSULTANT\b|\bOMNISTUDIO CONSULTANT\b|\bBUSINESS ANALYST\b|\bPLATFORM DEVELOPER I\b|\bPLATFORM DEVELOPER II\b|\bJAVASCRIPT DEVELOPER I\b|\bINDUSTRIES CPQ DEVELOPER\b|\bOMNISTUDIO DEVELOPER\b|\bB2C COMMERCE DEVELOPER\b|\bB2C COMMERCE ARCHITECT\b|\bIDENTITY & ACCESS MANAGEMENT ARCHITECT\b|\bSHARING & VISIBILITY ARCHITECT\b|\bDEVELOPMENT LIFECYCLE & DEPLOYMENT ARCHITECT\b|\bHEROKU ARCHITECT\b|\bINTEGRATION ARCHITECT\b|\bDATA ARCHITECT\b|\bAPPLICATION ARCHITECT\b|\bSYSTEM ARCHITECT\b|\bB2C SOLUTION ARCHITECT\b|\bB2B SOLUTION ARCHITECT\b|\bTECHNICAL ARCHITECT\b|\bPARDOT SPECIALIST\b|\bPARDOT CONSULTANT\b|\bMARKETING CLOUD ADMINISTRATOR\b|\bMARKETING CLOUD EMAIL SPECIALIST\b|\bMARKETING CLOUD CONSULTANT\b|\bMARKETING CLOUD DEVELOPER\b
+salesforce administrator 1
+salesforce administrator 2
+salesforce developer
+certified development lifecycle and deployment designer
+salesforce development lifecycle and deployment designer
+salesforce ADMINISTRATOR
+AWS certified cloud practitioner
+Certified cloud security professional
+Certified data privacy solutions engineer
+Certified data professional
+Certified ethical hacker
+Certified information security manager
+Certified information systems security professional
+Cisco certified internetwork expert
+Cisco certified network professional
+CompTIA
+Microsoft Certified Azure Solutions Architect
+Microsoft certified solutions associate/expert
+Information technology infrastructure library
+Oracle database and MySQL administration certifications
+Project management professional
+Salesforce certified development lifecycle and deployment designer
+CERTIFIED ADMINISTRATOR
+ADVANCED ADMINISTRATOR
+PLATFORM APP BUILDER
+USER EXPERIENCE (UX) DESIGNER
+STRATEGY DESIGNER
+SERVICE CLOUD CONSULTANT
+CPQ SPECIALIST
+SALES CLOUD CONSULTANT
+FIELD SERVICE CONSULTANT
+EXPERIENCE CLOUD CONSULTANT
+TABLEAU CRM & EINSTEIN DISCOVERY CONSULTANT
+NONPROFIT CLOUD CONSULTANT
+EDUCATION CLOUD CONSULTANT
+OMNISTUDIO CONSULTANT
+BUSINESS ANALYST
+PLATFORM DEVELOPER I
+PLATFORM DEVELOPER II
+JAVASCRIPT DEVELOPER I
+INDUSTRIES CPQ DEVELOPER
+OMNISTUDIO DEVELOPER
+B2C COMMERCE DEVELOPER
+B2C COMMERCE ARCHITECT
+IDENTITY & ACCESS MANAGEMENT ARCHITECT
+SHARING & VISIBILITY ARCHITECT
+DEVELOPMENT LIFECYCLE & DEPLOYMENT ARCHITECT
+HEROKU ARCHITECT
+INTEGRATION ARCHITECT
+DATA ARCHITECT
+APPLICATION ARCHITECT
+SYSTEM ARCHITECT
+B2C SOLUTION ARCHITECT
+B2B SOLUTION ARCHITECT
+TECHNICAL ARCHITECT
+PARDOT SPECIALIST
+PARDOT CONSULTANT
+MARKETING CLOUD ADMINISTRATOR
+MARKETING CLOUD EMAIL SPECIALIST
+MARKETING CLOUD CONSULTANT
+MARKETING CLOUD DEVELOPER

@@ -1,1 +1,97 @@
-\bSalesforce\b|\bApex\b|\bUML\b|\bC#\b|\bC\b|\bORACLE\b|\bBootstrap\b|\bGIT\b|\bGithub\b|\bSalesforce Devlopment\b|\bSalesforce Administration\b|\bFlow(s?)\b|\bSalesforce.com\b|\bSalesforce Implementation\b|\bApex Data Loader\b|\bLwc\b|\bSalesforce Sales Cloud\b|\bSOQL\b|\bApex Programming\b|\bVisualforce\b|\bSalesforce Consulting\b|\bLightning\b|\bForce.com\b|\bJavaScript\b|\bSQL\b|\bSoftware Development Life Cycle\b|\bSDLC\b|\bOracle Application Express\b|\bJava\b|\bWeb Services\b|\bSOAP\b|\bREST\b|\bDatabases\b|\bData Analysis\b|\bDevelopment Tools\b|\bEnterprise Software\b|\bHTML\b|\bHTML5\b|\bInformation Technology\b|\bInformation Systems\b|\bIntegration\b|\bJava\b|\bJavascript\b|\bJQuery\b|\bKanban\b|\bLinux\b|\bNetwork Administration\b|\bNetwork Systems \b|\bOperating Systems\b|\bOracle Database\b|\bSoftware Management  \b|\bUnix\b|\bangular \b|\bUnified Modeling Language \b|\bWindows \b|\bWeb Design\b|\bWeb Development\b|\bWindows Server \b|\bWeb Applications\b|\b WordPress\b|\bWireless Technologies\b|\bCSS\b|\bReact\b|\bReactJs\b|\bLaravel\b|\bVue\b|\bvuejs\b|\bphp\b|\bpython\b|\bruby\b|\spring boot\b|\spring security\b|\bgo\b|\bDjango\b|\bflask\b|\bOOP\b|\bMongoDB\b|\bPostgresqlKotlin\b|\bPerl\b|\bRust\b|\bshell\b|\bbash\b|\bAPL\b|\b\.net\b|\byml\b|\bjson\b|\bTailwind\b|\bnode js\b|\bnode\b|\bjs\b|\bMerise\b
+Salesforce
+Apex
+UML
+C#
+C
+ORACLE
+Bootstrap
+GIT
+VBA
+EXCEL
+WORD
+ERP
+TopSolid
+Sage
+Github
+Salesforce Devlopment
+Salesforce Administration
+Flow(s?)
+Salesforce.com
+Salesforce Implementation
+Apex Data Loader
+Lwc
+Salesforce Sales Cloud
+SOQL
+Apex Programming
+Visualforce
+Salesforce Consulting
+Lightning
+Force.com
+JavaScript
+SQL
+Software Development Life Cycle
+SDLC
+Oracle Application Express
+Java
+Web Services
+SOAP
+REST
+Databases
+Data Analysis
+Development Tools
+Enterprise Software
+HTML
+HTML5
+Information Technology
+Information Systems
+Integration
+Java
+Javascript
+JQuery
+Kanban
+Linux
+Network Administration
+Network Systems
+Operating Systems
+Oracle Database
+Software Management
+Unix
+angular
+Unified Modeling Language
+Windows
+Web Design
+Web Development
+Windows Server
+Web Applications
+WordPress
+Wireless Technologies
+CSS
+React
+ReactJs
+Laravel
+Vue
+vuejs
+php
+python
+ruby
+spring boot
+spring security
+go
+Django
+flask
+OOP
+MongoDB
+PostgresqlKotlin
+Perl
+Rust
+shell
+bash
+APL
+\.net
+yml
+json
+Tailwind
+node js
+node
+js
+Merise

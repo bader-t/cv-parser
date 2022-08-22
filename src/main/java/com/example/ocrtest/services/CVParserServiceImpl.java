@@ -26,13 +26,42 @@ import java.util.stream.Collectors;
 public class CVParserServiceImpl implements CVParserService{
 
     public String fileName = null;
+    private String hardSkillsData="";
+    private String softSkillsData="";
+    private String certificationData="";
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
     private final static DateParser dateParser = new DateParser();
     private final static String dateRegex = "[a-z]{3}\\s\\d{4}|[a-z]{4,}\\s\\d{4}|\\d{1,2}-\\d{1,2}-\\d{4}|\\d{1,2}\\s\\d{1,2}\\s\\d{4}|\\d{4}-\\d{1,2}-\\d{1,2}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{4}/\\d{1,2}/\\d{1,2}|\\d{1,2}\\s[a-z]{3}\\s\\d{4}|\\d{1,2}\\s[a-z]{4,}\\s\\d{4}";
 
 
-
+    public String loaddata(String path){
+        String data="";
+        try {
+            ClassLoader classLoader = CVParserServiceImpl.class.getClassLoader();
+            File file = new File(Objects.requireNonNull(classLoader.getResource(path)).getFile());
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line = "";
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                if (i == 0) {
+                    data += "\\b" + line + "\\b";
+                    i++;
+                }
+                data += "|\\b" + line + "\\b";
+            }
+            br.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return data;
+    }
     public CVParserServiceImpl() {
+        hardSkillsData = loaddata("skillsdataset.txt");
+        System.out.println(hardSkillsData);
+        softSkillsData = loaddata("soft_skills.txt");
+        System.out.println(softSkillsData);
+        certificationData = loaddata("certifications.txt");
+        System.out.println(certificationData);
         this.sectionMap.put(SectionType.Skills,Pattern.compile("^Skills$|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
         this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
         this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
@@ -77,31 +106,11 @@ public class CVParserServiceImpl implements CVParserService{
         return response;
     }
     public ContentResponseDTO parseException(final String content, CV cv){
-        String hardskilldata = "";
-        String softskilldata = "";
-        String certificationdata = "";
         List<Skill> listofskills = new ArrayList<>();
         List<Certification> listofcertification = new ArrayList<>();
-        try {
-            ClassLoader classLoader = CVParserServiceImpl.class.getClassLoader();
-            File file = new File(Objects.requireNonNull(classLoader.getResource("skillsdataset.txt")).getFile());
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            hardskilldata = br.readLine();
-            br.close();
-            file = new File(Objects.requireNonNull(classLoader.getResource("soft_skills.txt")).getFile());
-            br = new BufferedReader(new FileReader(file));
-            softskilldata = br.readLine();
-            br.close();
-            file = new File(Objects.requireNonNull(classLoader.getResource("certifications.txt")).getFile());
-            br = new BufferedReader(new FileReader(file));
-            certificationdata = br.readLine();
-            br.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        Pattern skillspattern = Pattern.compile(hardskilldata,Pattern.CASE_INSENSITIVE);
-        Pattern softskillspattern = Pattern.compile(softskilldata,Pattern.CASE_INSENSITIVE);
-        Pattern certificationpattern = Pattern.compile(certificationdata,Pattern.CASE_INSENSITIVE);
+        Pattern skillspattern = Pattern.compile(hardSkillsData,Pattern.CASE_INSENSITIVE);
+        Pattern softskillspattern = Pattern.compile(softSkillsData,Pattern.CASE_INSENSITIVE);
+        Pattern certificationpattern = Pattern.compile(certificationData,Pattern.CASE_INSENSITIVE);
         ContentResponseDTO response = new ContentResponseDTO();
         response.setContent(content);
         String emailregex = "[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
