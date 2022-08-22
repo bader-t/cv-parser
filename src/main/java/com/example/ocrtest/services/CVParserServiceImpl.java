@@ -30,23 +30,69 @@ public class CVParserServiceImpl implements CVParserService{
     private final static DateParser dateParser = new DateParser();
     private final static String dateRegex = "[a-z]{3}\\s\\d{4}|[a-z]{4,}\\s\\d{4}|\\d{1,2}-\\d{1,2}-\\d{4}|\\d{1,2}\\s\\d{1,2}\\s\\d{4}|\\d{4}-\\d{1,2}-\\d{1,2}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{4}/\\d{1,2}/\\d{1,2}|\\d{1,2}\\s[a-z]{3}\\s\\d{4}|\\d{1,2}\\s[a-z]{4,}\\s\\d{4}";
 
+
+
+    public CVParserServiceImpl() {
+        this.sectionMap.put(SectionType.Skills,Pattern.compile("^Skills$|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|Expérience",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+        this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
+    }
+    @Override
+    public ContentResponseDTO parse(final String content) throws Exception{
+        CV cv = new CV();
+        ContentResponseDTO response = new ContentResponseDTO();
+        Map<SectionType, SectionParser> parserMap = new HashMap<>();
+
+        parserMap.put(SectionType.Personal, new PersonalParser());
+        parserMap.put(SectionType.Certification, new CertificationParser());
+        parserMap.put(SectionType.Skills,new SkillParser());
+        parserMap.put(SectionType.Experience,new ExperienceParser());
+        parserMap.put(SectionType.Education, new EducationParser());
+        parserMap.put(SectionType.Soft_Skills,new SoftSkillsParser());
+
+        response.setContent(content);
+        this.extractFirstAndLastName(cv);
+        response.setCv(cv);
+
+        String[] lines = response.getContent().split("\n");
+        List<Section> sections = this.extractSection(lines);
+        for (Section section: sections) {
+            System.out.println(section.getType());
+            SectionParser sectionParser = parserMap.get(section.getType());
+            if (sectionParser != null) {
+                sectionParser.parse(section, cv);
+            }
+            System.out.println(section.getType() + "\n");
+            for (String d: section.getContent()
+                 ) {
+                System.out.println( "+" + d );
+            }
+            System.out.println("-------------");
+
+        }
+
+        return response;
+    }
     public ContentResponseDTO parseException(final String content, CV cv){
-        String hardskilldata = "JAVA";
+        String hardskilldata = "";
         String softskilldata = "";
         String certificationdata = "";
         List<Skill> listofskills = new ArrayList<>();
         List<Certification> listofcertification = new ArrayList<>();
         try {
             ClassLoader classLoader = CVParserServiceImpl.class.getClassLoader();
-            File file = new File(classLoader.getResource("skillsdataset.txt").getFile());
+            File file = new File(Objects.requireNonNull(classLoader.getResource("skillsdataset.txt")).getFile());
             BufferedReader br = new BufferedReader(new FileReader(file));
             hardskilldata = br.readLine();
             br.close();
-            file = new File(classLoader.getResource("soft_skills.txt").getFile());
+            file = new File(Objects.requireNonNull(classLoader.getResource("soft_skills.txt")).getFile());
             br = new BufferedReader(new FileReader(file));
             softskilldata = br.readLine();
             br.close();
-            file = new File(classLoader.getResource("certifications.txt").getFile());
+            file = new File(Objects.requireNonNull(classLoader.getResource("certifications.txt")).getFile());
             br = new BufferedReader(new FileReader(file));
             certificationdata = br.readLine();
             br.close();
@@ -109,62 +155,9 @@ public class CVParserServiceImpl implements CVParserService{
             List<Certification> cleancertificatiolist = listofcertification.stream().distinct().collect(Collectors.toList());
             cv.setSkills(cleanlist);
             cv.setCertifications(cleancertificatiolist);
+            this.extractFirstAndLastName(cv);
             response.setCv(cv);
         }
-        return response;
-    }
-
-    public CVParserServiceImpl() {
-        this.sectionMap.put(SectionType.Skills,Pattern.compile("^Skills$|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-        this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-        this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-        this.sectionMap.put(SectionType.Certification,Pattern.compile("Certification|Certificats|Certif",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-        this.sectionMap.put(SectionType.Experience,Pattern.compile("Experience|Expérience",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-        this.sectionMap.put(SectionType.Soft_Skills,Pattern.compile("Soft Skills",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
-    }
-    @Override
-    public ContentResponseDTO parse(final MultipartFile multipartFile) throws Exception{
-        CV cv = new CV();
-        ContentResponseDTO response = new ContentResponseDTO();
-        Map<SectionType, SectionParser> parserMap = new HashMap<>();
-
-        parserMap.put(SectionType.Personal, new PersonalParser());
-        parserMap.put(SectionType.Certification, new CertificationParser());
-        parserMap.put(SectionType.Skills,new SkillParser());
-        parserMap.put(SectionType.Experience,new ExperienceParser());
-        parserMap.put(SectionType.Education, new EducationParser());
-        parserMap.put(SectionType.Soft_Skills,new SoftSkillsParser());
-
-        response.setContent(this.extractContent(multipartFile));
-        if (this.fileName != null){
-            if(this.fileName.contains("_")){
-                String[] fullName = this.fileName.split("_", 2);
-                cv.setFirstName(fullName[0]);
-                cv.setLastName(fullName[1]);
-            }else {
-                cv.setFirstName(this.fileName);
-                cv.setLastName(this.fileName);
-            }
-        }
-        response.setCv(cv);
-
-        String[] lines = response.getContent().split("\n");
-        List<Section> sections = this.extractSection(lines);
-        for (Section section: sections) {
-            System.out.println(section.getType());
-            SectionParser sectionParser = parserMap.get(section.getType());
-            if (sectionParser != null) {
-                sectionParser.parse(section, cv);
-            }
-            System.out.println(section.getType() + "\n");
-            for (String d: section.getContent()
-                 ) {
-                System.out.println( "+" + d );
-            }
-            System.out.println("-------------");
-
-        }
-
         return response;
     }
 
@@ -197,6 +190,19 @@ public class CVParserServiceImpl implements CVParserService{
             return text;
 
         } return null;
+    }
+
+    public void extractFirstAndLastName(CV cv){
+        if (this.fileName != null){
+            if(this.fileName.contains("_")){
+                String[] fullName = this.fileName.split("_", 2);
+                cv.setFirstName(fullName[0]);
+                cv.setLastName(fullName[1]);
+            }else {
+                cv.setFirstName(this.fileName);
+                cv.setLastName(this.fileName);
+            }
+        }
     }
 
 

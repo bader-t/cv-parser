@@ -30,22 +30,13 @@ public class CVParserController {
     public ResponseEntity<ContentResponseDTO> classify(@Valid @NotNull @RequestParam("file") final MultipartFile pdfFile) {
         ContentResponseDTO temp = new ContentResponseDTO();
         if(pdfFile!=null){
-            String fileName = Objects.requireNonNull(pdfFile.getOriginalFilename()).split("\\.",2)[0];
-            if (fileName != null){
-                if(fileName.contains("_")){
-                    String[] fullName = fileName.split("_", 2);
-                    temp.getCv().setFirstName(fullName[0]);
-                    temp.getCv().setLastName(fullName[1]);
-                }else {
-                    temp.getCv().setFirstName(fileName);
-                    temp.getCv().setLastName(fileName);
-                }
-            }
+            String content = this.cvParserService.extractContent(pdfFile);
+
             try{
-                temp = this.cvParserService.parse(pdfFile);
+                temp = this.cvParserService.parse(content);
                 return ResponseEntity.ok().body(temp);
             }catch (Exception e) {
-                return ResponseEntity.ok().body(this.cvParserService.parseException(this.cvParserService.extractContent(pdfFile), temp.getCv()));
+                return ResponseEntity.ok().body(this.cvParserService.parseException(content, temp.getCv()));
             }
         }else{
             throw new IllegalStateException("Please Upload a file");
