@@ -34,11 +34,11 @@ public class AfterExceptionParsing {
     }
     public static ContentResponseDTO parseException(final String content, CV cv){
 
-        String data = "JAVA";
+        String data = "";
         List<Skill> listofskills = new ArrayList<>();
         try {
             ClassLoader classLoader = AfterExceptionParsing.class.getClassLoader();
-            File file = new File(classLoader.getResource("skillsdataset.txt").getFile());
+            File file = new File(Objects.requireNonNull(classLoader.getResource("skillsdataset.txt")).getFile());
             BufferedReader br = new BufferedReader(new FileReader(file));
             data = br.readLine();
             System.out.println(data);
@@ -53,30 +53,11 @@ public class AfterExceptionParsing {
         Pattern emailpattern = Pattern.compile(emailregex);
         Pattern phonepattern = Pattern.compile(phoneregex);
         if(cv.getPhoneNumber()==null || cv.getEmail()==null || cv.getSkills()==null){
-            int i=0;
             for(String line:content.split("\n")){
                 Matcher matcheremail = emailpattern.matcher(line);
                 Matcher matcherphone = phonepattern.matcher(line);
                 Matcher matcherskills = skillspattern.matcher(line);
-                if (i == 0 || i == 1) {
-                    String[] firstlast = line.trim().split(" ");
-                    if (firstlast.length > 1) {
-                        if (firstlast[0].trim().length() > 1) {
-                            cv.setFirstName(firstlast[1].trim());
-                            cv.setLastName(firstlast[0].trim());
-                        }else if (firstlast[0].trim().length() == 1) {
-                            firstlast = line.trim().split("  ");
-                            cv.setLastName(firstlast[0].trim());
-                        }
-                        i = 5;
-                    } else {
-                        if (i == 0) {
-                            cv.setLastName(line.trim());
-                        }else if (i == 1)
-                            cv.setFirstName(line.trim());
-                        i++;
-                    }
-                }
+
                 if(matcherphone.find()){
                     cv.setPhoneNumber(matcherphone.group());
                 }

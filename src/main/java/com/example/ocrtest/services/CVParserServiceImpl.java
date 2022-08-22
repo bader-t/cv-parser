@@ -2,7 +2,6 @@ package com.example.ocrtest.services;
 
 import com.example.ocrtest.DTOs.ContentResponseDTO;
 import com.example.ocrtest.entities.CV;
-import com.example.ocrtest.entities.Certification;
 import com.example.ocrtest.entities.Section;
 import com.example.ocrtest.entities.SectionType;
 import com.example.ocrtest.services.sectionImpl.*;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class CVParserServiceImpl implements CVParserService{
 
-
+    public String fileName = null;
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
 
     public CVParserServiceImpl() {
@@ -38,6 +37,7 @@ public class CVParserServiceImpl implements CVParserService{
         CV cv = new CV();
         ContentResponseDTO response = new ContentResponseDTO();
         Map<SectionType, SectionParser> parserMap = new HashMap<>();
+
         parserMap.put(SectionType.Personal, new PersonalParser());
         parserMap.put(SectionType.Certification, new CertificationParser());
         parserMap.put(SectionType.Skills,new SkillParser());
@@ -45,7 +45,20 @@ public class CVParserServiceImpl implements CVParserService{
         parserMap.put(SectionType.Education, new EducationParser());
         parserMap.put(SectionType.Soft_Skills,new SoftSkillsParser());
 
-        String[] lines = this.extractContent(multipartFile).split("\n");
+        response.setContent(this.extractContent(multipartFile));
+        if (this.fileName != null){
+            if(this.fileName.contains("_")){
+                String[] fullName = this.fileName.split("_", 2);
+                cv.setFirstName(fullName[0]);
+                cv.setLastName(fullName[1]);
+            }else {
+                cv.setFirstName(this.fileName);
+                cv.setLastName(this.fileName);
+            }
+        }
+        response.setCv(cv);
+
+        String[] lines = response.getContent().split("\n");
         List<Section> sections = this.extractSection(lines);
         for (Section section: sections) {
             System.out.println(section.getType());
@@ -61,16 +74,20 @@ public class CVParserServiceImpl implements CVParserService{
             System.out.println("-------------");
 
         }
-        response.setContent(this.extractContent(multipartFile));
-        response.setCv(cv);
+
         return response;
     }
 
 
+
     public String extractContent(final MultipartFile multipartFile){
         String text;
+        this.fileName = Objects.requireNonNull(multipartFile.getOriginalFilename()).split("\\.",2)[0];
+
         if(Objects.equals(multipartFile.getContentType(), "application/pdf")) {
             try (final PDDocument document = PDDocument.load(multipartFile.getInputStream())) {
+
+
                 final PDFTextStripper pdfStripper = new PDFTextStripper();
                 pdfStripper.setSortByPosition(true);
                 text = pdfStripper.getText(document);
