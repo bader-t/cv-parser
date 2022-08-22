@@ -3,7 +3,6 @@ package com.example.ocrtest.controllers;
 
 import com.example.ocrtest.DTOs.ContentResponseDTO;
 import com.example.ocrtest.services.CVParserService;
-import com.example.ocrtest.services.AfterExceptionParsing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+
 @RestController
 @RequestMapping("/api/v1/cv-parser")
 @RequiredArgsConstructor
@@ -23,7 +23,6 @@ import java.util.Objects;
 public class CVParserController {
 
     private final CVParserService cvParserService;
-    private final AfterExceptionParsing afterExceptionParsing;
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +45,7 @@ public class CVParserController {
                 temp = this.cvParserService.parse(pdfFile);
                 return ResponseEntity.ok().body(temp);
             }catch (Exception e) {
-                return ResponseEntity.ok().body(this.afterExceptionParsing.parseException(this.cvParserService.extractContent(pdfFile), temp.getCv()));
+                return ResponseEntity.ok().body(this.cvParserService.parseException(this.cvParserService.extractContent(pdfFile), temp.getCv()));
             }
         }else{
             throw new IllegalStateException("Please Upload a file");
