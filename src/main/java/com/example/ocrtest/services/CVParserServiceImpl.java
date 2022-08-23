@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 public class CVParserServiceImpl implements CVParserService{
 
     public String fileName = null;
-    private String hardSkillsData="";
-    private String softSkillsData="";
-    private String certificationData="";
+    private String hardSkillsData;
+    private String softSkillsData;
+    private String certificationData;
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
     private final static DateParser dateParser = new DateParser();
     private final static String dateRegex = "[a-z]{3}\\s\\d{4}|[a-z]{4,}\\s\\d{4}|\\d{1,2}-\\d{1,2}-\\d{4}|\\d{1,2}\\s\\d{1,2}\\s\\d{4}|\\d{4}-\\d{1,2}-\\d{1,2}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{4}/\\d{1,2}/\\d{1,2}|\\d{1,2}\\s[a-z]{3}\\s\\d{4}|\\d{1,2}\\s[a-z]{4,}\\s\\d{4}";
