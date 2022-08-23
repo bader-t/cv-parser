@@ -35,19 +35,24 @@ public class DateParser {
         return "Unknown";
     }
 
-    public String parseDate(String matcher){
+    public String parseDate(String matcher) {
          String format = this.determineDateFormat(matcher);
         System.out.println(format);
-        if (!format.equals("Unknown")){
-            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern(format)
-                    .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-                    .toFormatter(Locale.US);
+        try{
+            if (!format.equals("Unknown")){
+                DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                        .parseCaseInsensitive()
+                        .appendPattern(format)
+                        .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                        .toFormatter(Locale.US);
 
 
-            return  LocalDate.parse(matcher, formatter).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                return  LocalDate.parse(matcher, formatter).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
         return matcher;
 
     }
