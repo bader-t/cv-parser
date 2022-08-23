@@ -38,7 +38,7 @@ public class CVParserServiceImpl implements CVParserService{
         String data="";
         try {
             ClassLoader classLoader = CVParserServiceImpl.class.getClassLoader();
-            File file = new File(Objects.requireNonNull(classLoader.getResource(path)).getFile());
+            File file = new File("./src/main/resources/"+path);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = "";
             int i = 0;
