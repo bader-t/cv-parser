@@ -176,7 +176,6 @@ Flexibilité
 Innovation
 Pensée logique
 Résolution de problèmes
-Recherche
 Débrouillardise
 Réflexion hors des sentiers battus
 Tolérance au changement et à l'incertitude
@@ -235,6 +234,7 @@ Compétences en matière de vente
 Compétences sociales
 Constitution d'une équipe
 Travail en équipe
+Travail en groupe
 Attentivité
 Éthique commerciale
 Compétitivité
@@ -256,6 +256,8 @@ Résilience
 Orientation vers les résultats
 Programmation
 Autonome
+rigueur
+Autonomie
 Autocontrôle
 Autosupervision
 Rester concentré sur sa tâche
@@ -269,6 +271,7 @@ Sensibilisation aux tendances commerciales
 Service à la clientèle
 Communication efficace
 Gestion des émotions
+gestion des équipes
 Sensibilité à l'ergonomie
 Suivre les instructions
 Respecter les règlements
@@ -301,3 +304,5 @@ Volonté d'apprendre
 Travaille bien sous pression
 Analyzing spirit
 Excellent problem solver
+Responsable
+ponctuel(le?)
