@@ -34,7 +34,8 @@ public class CVParserController {
 
             try{
                 temp = this.cvParserService.parse(content);
-                return ResponseEntity.ok().body(temp);
+                throw new IllegalStateException();
+                // return ResponseEntity.ok().body(temp);
             }catch (Exception e) {
                 return ResponseEntity.ok().body(this.cvParserService.parseException(content, temp.getCv()));
             }

@@ -16,6 +16,8 @@ public class CV {
     private String education;
     private List<Experience> experiences;
     private List<Certification> certifications = new ArrayList<>();
+    private List<String> langues;
+    private String linkedin;
     public String toString(){
         return "name :" +this.firstName;
     }

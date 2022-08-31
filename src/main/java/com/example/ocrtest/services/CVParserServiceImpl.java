@@ -29,6 +29,7 @@ public class CVParserServiceImpl implements CVParserService{
     private String hardSkillsData;
     private String softSkillsData;
     private String certificationData;
+    private String langueData;
     private final Map<SectionType, Pattern> sectionMap = new HashMap<>();
     private final static DateParser dateParser = new DateParser();
     private final static String dateRegex = "[a-z]{3}\\s\\d{4}|[a-z]{4,}\\s\\d{4}|\\d{1,2}-\\d{1,2}-\\d{4}|\\d{1,2}\\s\\d{1,2}\\s\\d{4}|\\d{4}-\\d{1,2}-\\d{1,2}|\\d{1,2}/\\d{1,2}/\\d{4}|\\d{4}/\\d{1,2}/\\d{1,2}|\\d{1,2}\\s[a-z]{3}\\s\\d{4}|\\d{1,2}\\s[a-z]{4,}\\s\\d{4}";
@@ -57,11 +58,9 @@ public class CVParserServiceImpl implements CVParserService{
     }
     public CVParserServiceImpl() {
         hardSkillsData = loaddata("skillsdataset.txt");
-        System.out.println(hardSkillsData);
         softSkillsData = loaddata("soft_skills.txt");
-        System.out.println(softSkillsData);
         certificationData = loaddata("certifications.txt");
-        System.out.println(certificationData);
+        langueData = loaddata("langue.txt");
         this.sectionMap.put(SectionType.Skills,Pattern.compile("^Skills$|Compétence|expertise|Talents",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
         this.sectionMap.put(SectionType.Education,Pattern.compile("Education|Schooling|Learning|Parcours Scolaire",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
         this.sectionMap.put(SectionType.Interest,Pattern.compile("Interest|centres d'intérêt",Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS));
@@ -86,7 +85,7 @@ public class CVParserServiceImpl implements CVParserService{
         this.extractFirstAndLastName(cv);
         response.setCv(cv);
 
-        String[] lines = response.getContent().split("\n");
+        String[] lines = response.getContent().split("\r\n");
         List<Section> sections = this.extractSection(lines);
         for (Section section: sections) {
             System.out.println(section.getType());
@@ -107,17 +106,21 @@ public class CVParserServiceImpl implements CVParserService{
     }
     public ContentResponseDTO parseException(final String content, CV cv){
         List<Skill> listofskills = new ArrayList<>();
+        List<String> listOfLangue = new ArrayList<>();
         List<Certification> listofcertification = new ArrayList<>();
         Pattern skillspattern = Pattern.compile(hardSkillsData,Pattern.CASE_INSENSITIVE);
         Pattern softskillspattern = Pattern.compile(softSkillsData,Pattern.CASE_INSENSITIVE);
         Pattern certificationpattern = Pattern.compile(certificationData,Pattern.CASE_INSENSITIVE);
+        Pattern languepattern = Pattern.compile(langueData,Pattern.CASE_INSENSITIVE);
         ContentResponseDTO response = new ContentResponseDTO();
         response.setContent(content);
         String emailregex = "[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
         String phoneregex = "(\\+212|0)([ \\-_/]*)(\\d[ \\-_/]*){9}";
+        String linkedinregex = "[a-z]{2,3}\\.linkedin\\.com/.*";
         Pattern emailpattern = Pattern.compile(emailregex);
         Pattern phonepattern = Pattern.compile(phoneregex);
         Pattern datepattern = Pattern.compile(dateRegex,Pattern.CASE_INSENSITIVE);
+        Pattern linkedinPattern = Pattern.compile(linkedinregex,Pattern.CASE_INSENSITIVE);
         String dateoftoday = "not specified";
         if(cv.getPhoneNumber()==null || cv.getEmail()==null || cv.getSkills()==null){
             int i=0;
@@ -128,6 +131,8 @@ public class CVParserServiceImpl implements CVParserService{
                 Matcher matchersoftskills = softskillspattern.matcher(line);
                 Matcher matchercertification = certificationpattern.matcher(line);
                 Matcher matcherdate = datepattern.matcher(line);
+                Matcher matcherlangue = languepattern.matcher(line);
+                Matcher matcherlinkedin = linkedinPattern.matcher(line);
                 if(matcherphone.find()){
                     cv.setPhoneNumber(matcherphone.group());
                 }
@@ -148,6 +153,16 @@ public class CVParserServiceImpl implements CVParserService{
                         listofskills.add(newsoftskill);
                     }while (matchersoftskills.find());
                 }
+                if(matcherlinkedin.find()){
+                    cv.setLinkedin(matcherlinkedin.group());
+                    System.out.println(matcherlinkedin.group());
+                }
+                if(matcherlangue.find()){
+                    do{
+                        String langue = matcherlangue.group();
+                        listOfLangue.add(langue);
+                    }while (matcherlangue.find());
+                }
                 if(matchercertification.find()){
                     Certification newsoftskill = null;
                     if(matcherdate.find()){
@@ -163,6 +178,7 @@ public class CVParserServiceImpl implements CVParserService{
             List<Skill> cleanlist = listofskills.stream().distinct().collect(Collectors.toList());
             List<Certification> cleancertificatiolist = listofcertification.stream().distinct().collect(Collectors.toList());
             cv.setSkills(cleanlist);
+            cv.setLangues(listOfLangue);
             cv.setCertifications(cleancertificatiolist);
             this.extractFirstAndLastName(cv);
             response.setCv(cv);
@@ -181,7 +197,7 @@ public class CVParserServiceImpl implements CVParserService{
 
 
                 final PDFTextStripper pdfStripper = new PDFTextStripper();
-                pdfStripper.setSortByPosition(true);
+                // pdfStripper.setSortByPosition(true);
                 text = pdfStripper.getText(document);
 
             } catch (final Exception ex) {
