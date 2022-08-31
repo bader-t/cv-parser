@@ -115,14 +115,13 @@ public class CVParserServiceImpl implements CVParserService{
         ContentResponseDTO response = new ContentResponseDTO();
         response.setContent(content);
         String emailregex = "[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
-        String phoneregex = "(\\+212|0)([ \\-_/]*)(\\d[ \\-_/]*){9}";
+        String phoneregex = "(\\+212|\\(\\+212\\)|0)([ \\-_/]*)(\\d[ \\-_/]*){9}";
         String linkedinregex = "[a-z]{2,3}\\.linkedin\\.com/.*";
         Pattern emailpattern = Pattern.compile(emailregex);
         Pattern phonepattern = Pattern.compile(phoneregex);
         Pattern datepattern = Pattern.compile(dateRegex,Pattern.CASE_INSENSITIVE);
         Pattern linkedinPattern = Pattern.compile(linkedinregex,Pattern.CASE_INSENSITIVE);
         String dateoftoday = "not specified";
-        if(cv.getPhoneNumber()==null || cv.getEmail()==null || cv.getSkills()==null){
             int i=0;
             for(String line:content.split("\n")){
                 Matcher matcheremail = emailpattern.matcher(line);
@@ -174,11 +173,15 @@ public class CVParserServiceImpl implements CVParserService{
                     }while (matchercertification.find());
                 }
 
-            }
+
             List<Skill> cleanlist = listofskills.stream().distinct().collect(Collectors.toList());
             List<Certification> cleancertificatiolist = listofcertification.stream().distinct().collect(Collectors.toList());
             cv.setSkills(cleanlist);
-            cv.setLangues(listOfLangue);
+
+            listOfLangue.replaceAll(String::toLowerCase);
+            List<String> languelist = listOfLangue.stream().distinct().collect(Collectors.toList());
+            cv.setLangues(languelist);
+
             cv.setCertifications(cleancertificatiolist);
             this.extractFirstAndLastName(cv);
             response.setCv(cv);

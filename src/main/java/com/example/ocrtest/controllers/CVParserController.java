@@ -2,6 +2,7 @@ package com.example.ocrtest.controllers;
 
 
 import com.example.ocrtest.DTOs.ContentResponseDTO;
+import com.example.ocrtest.entities.CV;
 import com.example.ocrtest.services.CVParserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 
 @RestController
@@ -37,7 +37,7 @@ public class CVParserController {
                 throw new IllegalStateException();
                 // return ResponseEntity.ok().body(temp);
             }catch (Exception e) {
-                return ResponseEntity.ok().body(this.cvParserService.parseException(content, temp.getCv()));
+                return ResponseEntity.ok().body(this.cvParserService.parseException(content, new CV()));
             }
         }else{
             throw new IllegalStateException("Please Upload a file");
