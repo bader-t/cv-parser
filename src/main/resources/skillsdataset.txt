@@ -35,6 +35,9 @@ Oracle Application Express
 Java
 Web Services
 SOAP
+JEE
+java entreprise edition
+javaee
 REST
 Databases
 Data Analysis
@@ -45,8 +48,6 @@ HTML5
 Information Technology
 Information Systems
 Integration
-Java
-Javascript
 JQuery
 Kanban
 Linux
@@ -66,8 +67,10 @@ Web Applications
 WordPress
 Wireless Technologies
 CSS
+CSS3
 React
 ReactJs
+react js
 Laravel
 Vue
 vuejs
@@ -76,6 +79,8 @@ python
 ruby
 spring boot
 spring security
+spring data
+spring mvc
 go
 Django
 flask
@@ -92,6 +97,24 @@ yml
 json
 Tailwind
 node js
+nodejs
 node
 js
 Merise
+powerbi
+power bi
+joomla
+typescript
+nest js
+nestjs
+next js
+nextjs
+docker
+jupyter
+ai
+SQLite
+unity
+xml
+express js
+expressjs
+nosql
